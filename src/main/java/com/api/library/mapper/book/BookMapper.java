@@ -14,7 +14,7 @@ import com.api.library.mapper.GenericMapper;
 public class BookMapper extends GenericMapper<BookDTO, Book> {
 
     /***
-     *  Create Single Object of Author Mapper
+     *  Create Single Object of Book Mapper
      */
     private static BookMapper instance=null;
     public static BookMapper getInstance(){
@@ -25,9 +25,9 @@ public class BookMapper extends GenericMapper<BookDTO, Book> {
     }
 
     /**
-     * Transfer Author Object to AuthorDTO Object
-     * @param model  {@link Author}
-     * @param dto {@link AuthorDTO}
+     * Transfer Book Object to BookDTO Object
+     * @param model  {@link Book}
+     * @param dto {@link BookDTO}
      *
      */
     @Override
@@ -40,8 +40,8 @@ public class BookMapper extends GenericMapper<BookDTO, Book> {
 
     /***
      *
-     * @param model {@link Author}
-     * @return AuthorDTO
+     * @param model {@link Book}
+     * @return BookDTO
      */
     @Override
     public BookDTO modelTODTO(Book model) {
@@ -54,6 +54,13 @@ public class BookMapper extends GenericMapper<BookDTO, Book> {
         return dto;
     }
 
+    /**
+     *
+     * Set {@link BookDTO} to Author added
+     * @param dto {@link BookDTO}
+     * @param book {@link Book}
+     *
+     */
     private void setAuthor(BookDTO dto,Book book){
         if(book.getAuthor()!=null){
             dto.setAuthorId(book.getAuthor().getId());
