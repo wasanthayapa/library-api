@@ -40,7 +40,7 @@ public class AuthorController {
      *
      */
     @GetMapping("/{id}")
-    private ResponseEntity<AuthorDTO> getAllAuthor(@PathVariable("id")Integer id){
+    private ResponseEntity<AuthorDTO> getAuthorById(@PathVariable("id")Integer id){
         AuthorDTO dto=authorService.findAuthorById(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -55,7 +55,7 @@ public class AuthorController {
      */
 
     @PostMapping
-    private ResponseEntity<AuthorDTO> getAllAuthor(@RequestBody AuthorDTO dto){
+    private ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO dto){
         AuthorDTO authorDTO=authorService.createOrUpdateAuthor(dto);
         return ResponseEntity
                 .status(HttpStatus.OK)
