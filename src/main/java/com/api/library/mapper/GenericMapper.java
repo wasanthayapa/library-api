@@ -2,6 +2,8 @@ package com.api.library.mapper;
 
 import com.api.library.dto.BaseDTO;
 import com.api.library.entity.BaseModel;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,16 @@ public abstract class GenericMapper<DTO extends BaseDTO, MODEL extends BaseModel
             dtoList.add(modelTODTO(model));
         }
         return dtoList;
+    }
+    /***
+     * Common implementation for Model List to to DTO Lisy
+     * @param modelPage {@link Page} of {@link BaseModel}
+     * @return Pageable object of {@link BaseDTO}
+     *
+     */
+    public Page<DTO> dtoToModelPage(Page<MODEL> modelPage) {
+        Page<DTO> dtoPage  = modelPage.map(this::modelTODTO);
+        return dtoPage;
     }
 
 }

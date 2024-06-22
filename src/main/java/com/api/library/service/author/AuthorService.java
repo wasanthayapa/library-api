@@ -1,6 +1,7 @@
 package com.api.library.service.author;
 
 import com.api.library.dto.author.AuthorDTO;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
 public interface AuthorService {
 
     List<AuthorDTO> getAll();
+
+    Page<AuthorDTO> getAll(Integer pageNumber,Integer size);
 
     AuthorDTO findAuthorById(Integer id);
 

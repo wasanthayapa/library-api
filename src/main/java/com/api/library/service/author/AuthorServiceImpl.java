@@ -7,6 +7,9 @@ import com.api.library.exception.RecodeNotFoundException;
 import com.api.library.mapper.author.AuthorMapper;
 import com.api.library.repository.author.AuthorRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +42,16 @@ public class AuthorServiceImpl implements AuthorService {
             throw new RecodeNotFoundException("Cannot find any author");
         }
     }
-
+    @Override
+    public Page<AuthorDTO> getAll(Integer pageNumber,Integer size){
+        Pageable pageable = PageRequest.of(pageNumber, size);
+        Page<Author> authorList = authorRepository.findAll(pageable);
+        if (authorList.getTotalElements() > 0) {
+            return AuthorMapper.getInstance().dtoToModelPage(authorList);
+        } else {
+            throw new RecodeNotFoundException("Cannot find any author");
+        }
+    }
     /***
      *
      * Get selected author by author id

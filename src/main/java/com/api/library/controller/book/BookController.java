@@ -5,6 +5,7 @@ import com.api.library.dto.book.BookDTO;
 import com.api.library.service.author.AuthorService;
 import com.api.library.service.book.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +37,21 @@ public class BookController {
                 .body(list);
     }
 
+
+    /**
+     *
+     * @param size no of row per page {@link Integer}
+     * @param pageNumber page number {@link Integer}
+     * @return Paginating of book register in system with pagination
+     *
+     */
+    @GetMapping("/{size}/{pageNumber}")
+    private ResponseEntity<Page<BookDTO>> getAllPageBook(@PathVariable("size")Integer size, @PathVariable("pageNumber")Integer pageNumber){
+        Page<BookDTO> list=bookService.getAll(size,pageNumber);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(list);
+    }
     /**
      *
      * @param id registered Book id

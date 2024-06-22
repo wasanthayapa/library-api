@@ -9,6 +9,9 @@ import com.api.library.mapper.book.BookMapper;
 import com.api.library.repository.author.AuthorRepository;
 import com.api.library.repository.book.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +43,23 @@ public class BookServiceImpl implements BookService {
             return BookMapper.getInstance().dtoToModelCollection(bookList);
         } else {
             throw new RecodeNotFoundException("Cannot find any Book");
+        }
+    }
+
+    /***
+     *
+     * Get all Book Paginating list
+     * @return Page of {@link BookDTO}
+     *
+     */
+    @Override
+    public Page<BookDTO> getAll(Integer pageNumber, Integer size) {
+        Pageable pageable = PageRequest.of(pageNumber, size);
+        Page<Book> bookPage = bookRepository.findAll(pageable);
+        if (bookPage.getTotalElements() > 0) {
+            return BookMapper.getInstance().dtoToModelPage(bookPage);
+        } else {
+            throw new RecodeNotFoundException("Cannot find any Books");
         }
     }
 

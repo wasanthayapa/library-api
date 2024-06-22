@@ -3,6 +3,7 @@ package com.api.library.controller.author;
 import com.api.library.dto.author.AuthorDTO;
 import com.api.library.service.author.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,17 @@ public class AuthorController {
                 .body(list);
     }
 
+    /***
+     *
+     * @return List of author register in system with pagination
+     */
+    @GetMapping("/{size}/{noOfPages}")
+    private ResponseEntity<Page<AuthorDTO>> getAllPageAuthor(@PathVariable("size")Integer size,@PathVariable("noOfPages")Integer noOfPages){
+        Page<AuthorDTO> list=authorService.getAll(size,noOfPages);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(list);
+    }
     /**
      *
      * @param id registered author id
