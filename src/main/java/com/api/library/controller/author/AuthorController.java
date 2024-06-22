@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/author")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -56,7 +57,7 @@ public class AuthorController {
 
     @PostMapping
     private ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO dto){
-        AuthorDTO authorDTO=authorService.createOrUpdateAuthor(dto);
+        AuthorDTO authorDTO=authorService.createAuthor(dto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(authorDTO);
@@ -68,9 +69,9 @@ public class AuthorController {
      * @return Updated author
      *
      */
-    @PutMapping
-    private ResponseEntity<AuthorDTO> updateAuthor(@RequestBody AuthorDTO dto){
-        AuthorDTO authorDTO=authorService.createOrUpdateAuthor(dto);
+    @PutMapping("/{id}")
+    private ResponseEntity<AuthorDTO> updateAuthor(@PathVariable("id")Integer authorId,@RequestBody AuthorDTO dto){
+        AuthorDTO authorDTO=authorService.updateAuthor(authorId,dto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(authorDTO);

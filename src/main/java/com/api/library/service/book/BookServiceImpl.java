@@ -1,8 +1,6 @@
 package com.api.library.service.book;
 
-import com.api.library.dto.author.AuthorDTO;
 import com.api.library.dto.book.BookDTO;
-import com.api.library.entity.author.Author;
 import com.api.library.entity.book.Book;
 import com.api.library.exception.AuthorException;
 import com.api.library.exception.BookException;
@@ -58,16 +56,37 @@ public class BookServiceImpl implements BookService {
     }
 
     /**
-     * Create new Book or Update Existing Book
-     * @param dto {@link BookDTO}
-     * @return Created or Updated Book {@link BookDTO}
+     * Create new Book
      *
+     * @param dto {@link BookDTO}
+     * @return Created  Book {@link BookDTO}
      */
     @Override
     @Transactional
-    public BookDTO createOrUpdateBook(BookDTO dto) {
+    public BookDTO createBook(BookDTO dto) {
         try {
-            Book book = createOrUpdate(dto);
+            Book book = createOrUpdate(null);
+            BookMapper.getInstance().dtoToModel(book, dto);
+            setAuthor(book, dto);
+            return BookMapper.getInstance().modelTODTO(bookRepository.save(book));
+        } catch (BookException exception) {
+            throw new AuthorException("Error occurred Book creation");
+        }
+    }
+
+    /**
+     * Update Existing Book
+     *
+     * @param dto {@link BookDTO}
+     * @return Updated  Book {@link BookDTO}
+     */
+
+    @Override
+    @Transactional
+    public BookDTO updateBook(Integer bookId, BookDTO dto) {
+        try {
+            Book book = createOrUpdate(bookId);
+            dto.setId(bookId);
             BookMapper.getInstance().dtoToModel(book, dto);
             setAuthor(book, dto);
             return BookMapper.getInstance().modelTODTO(bookRepository.save(book));
@@ -83,9 +102,9 @@ public class BookServiceImpl implements BookService {
      * @return Book object {@link Book}
      *
      */
-    private Book createOrUpdate(BookDTO dto) {
-        if (dto.getId() != null) {
-            return getBookById(dto.getId());
+    private Book createOrUpdate(Integer bookId) {
+        if (bookId != null) {
+            return getBookById(bookId);
         }
         return new Book();
     }
@@ -97,13 +116,14 @@ public class BookServiceImpl implements BookService {
      * @param dto {@link BookDTO}
      *
      */
-    private void setAuthor(Book book,BookDTO dto){
-        if(dto.getAuthorId()!=null){
+    private void setAuthor(Book book, BookDTO dto) {
+        if (dto.getAuthorId() != null) {
             book.setAuthor(authorRepository.getReferenceById(dto.getAuthorId()));
-        }else{
+        } else {
             throw new BookException("Please assign Author for Book");
         }
     }
+
     /***
      *
      * Find Author by id

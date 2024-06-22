@@ -15,5 +15,7 @@ public interface AuthorService {
 
     AuthorDTO findAuthorById(Integer id);
 
-    AuthorDTO createOrUpdateAuthor(AuthorDTO dto);
+    AuthorDTO createAuthor(AuthorDTO dto);
+
+    AuthorDTO updateAuthor(Integer authorId,AuthorDTO dto);
 }

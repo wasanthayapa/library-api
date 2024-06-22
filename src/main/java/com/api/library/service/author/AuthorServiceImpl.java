@@ -60,13 +60,33 @@ public class AuthorServiceImpl implements AuthorService {
      */
     @Override
     @Transactional
-    public AuthorDTO createOrUpdateAuthor(AuthorDTO dto) {
+    public AuthorDTO createAuthor(AuthorDTO dto) {
         try {
-            Author author = createOrUpdate(dto);
+            Author author = createOrUpdate(dto, null);
             AuthorMapper.getInstance().dtoToModel(author, dto);
             return AuthorMapper.getInstance().modelTODTO(authorRepository.save(author));
-        }catch (AuthorException exception){
+        } catch (AuthorException exception) {
             throw new AuthorException("Error occurred Author creation");
+        }
+    }
+
+    /**
+     * Update Existing Author
+     *
+     * @param dto {@link AuthorDTO}
+     * @return Updated Author {@link AuthorDTO}
+     */
+
+    @Override
+    @Transactional
+    public AuthorDTO updateAuthor(Integer authorId, AuthorDTO dto) {
+        try {
+            Author author = createOrUpdate(dto, authorId);
+            dto.setId(authorId);
+            AuthorMapper.getInstance().dtoToModel(author, dto);
+            return AuthorMapper.getInstance().modelTODTO(authorRepository.save(author));
+        } catch (AuthorException exception) {
+            throw new AuthorException("Error occurred Author Update");
         }
     }
 
@@ -77,9 +97,9 @@ public class AuthorServiceImpl implements AuthorService {
      * @return Author object {@link Author}
      *
      */
-    private Author createOrUpdate(AuthorDTO dto) {
-        if (dto.getId() != null) {
-            return getAuthorById(dto.getId());
+    private Author createOrUpdate(AuthorDTO dto, Integer authorId) {
+        if (authorId != null) {
+            return getAuthorById(authorId);
         }
         return new Author();
     }

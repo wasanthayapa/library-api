@@ -16,5 +16,7 @@ public interface BookService {
 
     BookDTO findBookById(Integer id);
 
-    BookDTO createOrUpdateBook(BookDTO dto);
+    BookDTO createBook(BookDTO dto);
+
+    BookDTO updateBook(Integer bookId,BookDTO dto);
 }

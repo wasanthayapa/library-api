@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/book")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookController {
 
     private final BookService bookService;
@@ -58,7 +59,7 @@ public class BookController {
 
     @PostMapping
     private ResponseEntity<BookDTO> createBook(@RequestBody BookDTO dto){
-        BookDTO bookDTO=bookService.createOrUpdateBook(dto);
+        BookDTO bookDTO=bookService.createBook(dto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(bookDTO);
@@ -70,9 +71,9 @@ public class BookController {
      * @return Updated book
      *
      */
-    @PutMapping
-    private ResponseEntity<BookDTO> updateBook(@RequestBody BookDTO dto){
-        BookDTO bookDTO=bookService.createOrUpdateBook(dto);
+    @PutMapping("/{id}")
+    private ResponseEntity<BookDTO> updateBook(@PathVariable("id")Integer bookId,@RequestBody BookDTO dto){
+        BookDTO bookDTO=bookService.updateBook(bookId,dto);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(bookDTO);
