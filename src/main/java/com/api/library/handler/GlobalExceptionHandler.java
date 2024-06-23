@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(RecodeNotFoundException.class)
     public ResponseEntity<?> handleRecodeNotFoundException(RecodeNotFoundException ex, WebRequest request) {
-        return new ResponseEntity<>(ex.getCause().getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
     /***
      *
