@@ -2,29 +2,29 @@
 #### GET /books
  Returns paginate list of books in the database in JSON format.
 
-####GET /book/{{id}}/
+#### GET /book/{{id}}/
 Returns a detailed view of the specified book id.
 Nest author details in JSON format.
 
-####GET /authors
+#### GET /authors
 Returns a list of authors in the database in JSON format.
 
-####GET /author/{{id}}
+#### GET /author/{{id}}
 Returns a detailed view of the specified author id
 
-####POST /author
+#### POST /author
 Creates a new author with the specified details.
 Expects a JSON body.
 
-####POST /book
+#### POST /book
 Creates a new book with the specified details.
 Expects a JSON body
 
-####PUT /author/{{id}}
+#### PUT /author/{{id}}
 Updates an existing author.
 Expects a JSON body.
 
-####PUT /book/{{id}}
+#### PUT /book/{{id}}
 Updates an existing book.
 Expects a JSON body.
 
