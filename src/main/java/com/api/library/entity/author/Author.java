@@ -2,8 +2,8 @@ package com.api.library.entity.author;
 
 import com.api.library.entity.BaseModel;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 /**
  * Project library-api
@@ -14,19 +14,27 @@ import lombok.Setter;
 @Table(name = "tbl_author")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Author extends BaseModel {
 
     private static final long serialVersionUID = -3548797942204045837L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "authors_s")
-    @SequenceGenerator(name = "authors_s", sequenceName = "authors_s", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "first_name ")
+    @NonNull
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name ")
+    @NonNull
+    @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    public Author(@NonNull String firstName, @NonNull String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

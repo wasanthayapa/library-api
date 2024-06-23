@@ -39,9 +39,9 @@ public class AuthorController {
      *
      * @return List of author register in system with pagination
      */
-    @GetMapping("/{size}/{noOfPages}")
-    private ResponseEntity<Page<AuthorDTO>> getAllPageAuthor(@PathVariable("size")Integer size,@PathVariable("noOfPages")Integer noOfPages){
-        Page<AuthorDTO> list=authorService.getAll(size,noOfPages);
+    @GetMapping("/{size}/{pageNo}")
+    private ResponseEntity<Page<AuthorDTO>> getAllPageAuthor(@PathVariable("size")Integer size,@PathVariable("pageNo")Integer pageNo){
+        Page<AuthorDTO> list=authorService.getAll(size,pageNo);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(list);
